@@ -31,7 +31,7 @@ class syndicai(object):
             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
 
-    def predict(self, X):
+    def predict(self, X, features_name=None):
         
         img = Image.open(io.BytesIO(base64.b64decode(X)))
         img_tensor = self.transform(img)

@@ -5,7 +5,7 @@ import json
 import base64
 import numpy as np
 import torch
-from torchvision import models
+from torchvision import models, transforms
 from torch import nn
 
 from PIL import Image
@@ -24,17 +24,27 @@ class syndicai(object):
         download_model(models_url, path)
         self._model.load_state_dict(torch.load(path, map_location=torch.device('cpu')))
         self._model.eval()
+        self.transform = transforms.Compose([
+            transforms.Resize(256),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        ])
 
-    def predict(self, X, features_names=None):
+    def predict(self, X):
         
-        img = np.array(Image.open(io.BytesIO(base64.b64decode(X))).resize((224, 224))).astype(np.float) / 128 - 1
+        img = Image.open(io.BytesIO(base64.b64decode(X)))
+        img_tensor = self.transform(img)
+        img_tensor.unsqueeze_(0)
+        img_tensor = img_tensor.to('cpu')
 
         with torch.no_grad():
             outputs = self._model(img)
+        _, index = outputs[0].max(0)
 
         labels = ["correctly", "incorrectly"]
 
-        return labels[torch.max(outputs, 1)]
+        return labels[index]
 
 
     def metrics(self):

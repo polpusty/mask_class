@@ -19,7 +19,7 @@ class syndicai(object):
         self._model = models.resnet18()
         path = os.path.join(os.getcwd(), 'model')
         download_model(models_url, path)
-        self._model.load_state_dict(torch.load(path))      
+        self._model.load_state_dict(torch.load(path, map_location=torch.device('cpu')))      
 
     def predict(self, X, features_names=None):
         

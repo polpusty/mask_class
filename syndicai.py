@@ -6,6 +6,7 @@ import base64
 import numpy as np
 import torch
 from torchvision import models
+from torch import nn
 
 from PIL import Image
 from helpers import download_model

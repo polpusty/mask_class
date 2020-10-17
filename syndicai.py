@@ -39,7 +39,7 @@ class syndicai(object):
         img_tensor = img_tensor.to('cpu')
 
         with torch.no_grad():
-            outputs = self._model(img)
+            outputs = self._model(img_tensor)
         _, index = outputs[0].max(0)
 
         labels = ["correctly", "incorrectly"]

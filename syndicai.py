@@ -16,7 +16,7 @@ checkpoint = 'mobilenet_v2_1.0_224'
 
 class syndicai(object):
     def __init__(self):
-        self._model = models.resnet18()
+        self._model = models.resnet18(pretrained=True, num_classes=2)
         path = os.path.join(os.getcwd(), 'model')
         download_model(models_url, path)
         self._model.load_state_dict(torch.load(path, map_location=torch.device('cpu')))      

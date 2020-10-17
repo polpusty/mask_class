@@ -10,7 +10,7 @@ from torchvision import models
 from PIL import Image
 from helpers import download_model
 
-models_url = 'https://4c97009f585972fe-dot-us-west1.notebooks.googleusercontent.com/lab/tree/model.bin'
+models_url = 'https://www.dropbox.com/s/bmjryfdjvt88fne/model.bin?dl=1'
 checkpoint = 'mobilenet_v2_1.0_224'
 
 
